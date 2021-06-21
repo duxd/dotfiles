@@ -401,7 +401,7 @@ Cursors
 # Title bar buttons (three icons in the upper right hand corner) ---------
 # http://www.custompc.plus.com/twm/twmrc.htm
 
-IconDirectory "/home/dusko/.twm/icons" # Directory for non default icons
+IconDirectory "~/.twm/icons" # Directory for non default icons
 
 # Left mouse button click on the first title button = minimize/maximize
 LeftTitleButton "resize.xbm"=f.resize
