@@ -1,0 +1,1059 @@
+# To reload: # From TWM's menu, select Restart.
+# It kills and restarts twm.
+
+#
+# Default twm configuration file; needs to be kept small to conserve string
+# space in systems whose compilers don't handle medium-sized strings.
+#
+# Sites should tailor this file, providing any extra title buttons, menus, etc.
+# that may be appropriate for their environment.  For example, if most of the
+# users were accustomed to uwm, the defaults could be set up not to decorate
+# any windows and to use meta-keys.
+#
+
+## TWM ## Variables & Icon Management #####################################
+
+# http://www.custompc.plus.com/twm/configs/twmrc09
+
+###############################################################################
+# These parameters control twm and windows behaviour
+#NoDefaults                # If you want e.g. to disable Iconify and Resize icons.
+#NoRaiseonDeiconify
+#WarpCursor                # Move cursor into windows when they're deiconified.
+BorderWidth           1    # Number of pixels for border around entire window
+NoGrabServer               # Don't grab server during menus, etc.
+NoRaiseOnMove              # Allow moving under other windows.
+NoRaiseOnResize            # Allow resizing under other windows.
+OpaqueMove                 # Show the window contents while moving the window (instead of outline)
+DontMoveOff                # Disallow moving windows off the visible screen.
+MoveDelta             3
+RestartPreviousState       # Reiconify iconified things on startup.
+UsePPosition  "on"         # Use program-specified size hints accepted.
+WarpUnmapped               # Allow warping to unmapped windows.
+ClientBorderWidth          # Use the application border width on frame.
+DecorateTransients         # Put titlebars on transients.
+NoTitleFocus               # Avoid keystrokes in wrong window because of lag.
+                           # a.k.a. Don't loose focus when mouse moves away from it.
+EnableXrenderTransparency
+
+# Windows resize without having to drag pointer over their borders.
+# (Don't require resize to cross border to start.)
+AutoRelativeResize        
+
+# Force named windows to have title bars.
+#MakeTitle   {}
+
+# Set Named Windows Titles
+# Named Windows will have no title bar.
+# https://github.com/jrblevin/config/blob/master/.twmrc
+NoTitle                         # little programs that look like icons
+{
+    "xclock" "xbiff" "TWM Icon Manager" "xcutsel" #"xload"   
+}
+
+#SqueezeTitle   # also sets default to Squeeze all Titles
+{
+#   name justify num denom
+    "oclock" center   0  0  # centered over middle of title
+    "XTerm" left   0  0  # left edge of title
+    "xlogo" right   0  0  # for kicks
+    "emacs" right   0  0  # left side emacs with center tab
+    "xmh" center   0  0
+}
+
+##############################################################################
+# Set IconManager behaviour
+
+ShowIconManager            # Show Icon Manager immediately 
+SortIconManager            # Sort icons in Icon Manager in alphabetical order.
+
+# Makes an extra button on each title bar, that calls up menu below.
+LeftTitleButton  "menu12" = f.menu "TwmWindows"
+
+# Settings affecting window borders etc. ---------------------------------
+# http://www.custompc.plus.com/twm/twmrc.htm
+#   and
+# https://opensource.apple.com/source/X11apps/X11apps-44/twm/twm-1.0.6/sample-twmrc/jim.twmrc
+FramePadding 0            # Number of pixels between title bar buttons & frame
+TitleButtonBorderWidth 0  # Don't want to see box around button 
+TitlePadding 0            # Number of pixels around title buttons
+# Larger seems to squash buttons together (button doesn't have to be smaller)
+ButtonIndent 0            
+MenuBorderWidth 0         # Number of pixels for menu border
+NoMenuShadows             # No shadow behind the menu
+
+# Windows with no specified geometry should be placed in a pseudo-random
+# location instead of having the user drag out an outline.
+RandomPlacement
+
+# Length of time to achieve a "double-click" for constained move.
+# Setting it to zero (0): Supposed to turn off horizontal/vertical only moving?
+#ConstrainedMoveTime  200
+
+# Indicates the outlines suggesting movement of a window to and from
+# its iconified state should be displayed whenever a window is iconified
+# or deiconified.
+#Zoom 50
+
+# Initial location of Icon Manager, colums of icons.
+# Width: 170 pixels
+# Down (from upper left corner (0,0) ):  25 pixels
+# Right: 0 pixels
+IconManagerGeometry  "170+0+25" 1
+
+#                                                                             #
+#     Display an icon manager across the top of the screen.  Don't manage     #
+#                the windows for which you don't show a title.                #
+#                                                                             #
+#IconManagerGeometry "700x50+246+2" 14 # strip across top
+#IconRegion "200x300+950+2" North East 50 50
+
+# Named windows below will not be shown in Icon Manager.
+#IconManagerDontShow  { "xclock" "Virtual Desktop" }
+
+# Named windows will _not_ go to icon manager, but will have desktop icons.
+#DontIconifyByUnmapping  { "xclock" "Virtual Desktop" }
+
+# Makes applications use icons in Icons directive, instead of their own.
+#ForceIcons
+
+# Iconifying a window sends it to the Icon Manager.
+IconifyByUnmapping
+
+# Named windows will be shown in Icon Manager
+#IconManagerShow
+
+# You can specify that certain apps have icons other than the default.
+# Icons for programs (can also often be set as resources in  .Xdefaults).
+Icons {
+ "xterm" "terminal"
+ #"mush"  "mailempty"
+}
+IconRegion  "500x128+450+0" North East 10  10
+
+# Named windows will start iconized.
+#StartIconified   {}
+
+TitleFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+ResizeFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+MenuFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+IconFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
+IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
+
+# http://www.custompc.plus.com/twm/configs/twmrc02
+NoSaveUnders             # Faster to just repaint then save.
+XORvalue 1               # Tend to use visually distinct adjacent colors.
+InterpolateMenuColors    # Turn on smooth color changes in menus.
+
+# The main detail of a theme in TWM is the color section of your .twmrc. 
+
+# Themes mostly copied from Graham's TWM page!
+#   http://www.custompc.plus.com/twm/twmrc.htm
+
+##################################################################
+### Variables Section
+##################################################################
+#
+#  In this section: set the values for some generic
+#  properties of all windows.
+#
+#  First set the colors for parts of the X-window for
+#  both monochrome and color screens.
+###
+#Monochrome
+#{
+#    BorderColor "black"
+#    TitleForeground "black"
+#    TitleBackground "white"
+#    MenuForeground "black"
+#    MenuBackground "white"
+#    MenuTitleForeground "white"
+#    MenuTitleBackground "black"
+#    IconForeground "White"
+#    IconBackground "black"
+#    IconBorderColor "black"
+#}
+
+#Color
+#{
+#    BorderColor "slategrey"
+#    DefaultBackground "rgb:2/a/9"
+#    DefaultForeground "gray85"
+#    TitleBackground "rgb:2/a/9"
+#    TitleForeground "gray85"
+#    MenuBackground "rgb:2/a/9"
+#    MenuForeground "gray85"
+#    MenuBorderColor "slategrey"
+#    MenuTitleBackground "gray70"
+#    MenuTitleForeground "rgb:2/a/9"
+#    IconBackground "rgb:2/a/9"
+#    IconForeground "gray85"
+#    IconBorderColor "gray85"
+#    IconManagerBackground "rgb:2/a/9"
+#    IconManagerForeground "gray85"
+#}
+
+# A colourfull theme with an OS logo background from a famous computer company.
+#Color
+#{
+#BorderColor         "#AEB2C5"
+#DefaultBackground   "#AEB2C5"
+#DefaultForeground   "Black"
+
+#TitleBackground     "#B44D7A"
+#TitleForeground     "White"
+
+#MenuTitleBackground "#B44D7A"
+#MenuTitleForeground "White"
+
+#MenuBackground      "#AEB2C5"
+#MenuForeground      "#322E2D"
+
+#MenuShadowColor     "#322E2D"
+#MenuBorderColor     "White"
+#}
+# xv ~/.twm/walls/solaris.gif -root -quit
+
+# An olive theme with greenstone background.
+#Color
+#{
+#BorderColor         "#000000"
+#DefaultBackground   "#C0C1B1"
+#DefaultForeground   "#595E3E"
+
+#TitleBackground     "#595E3E"
+#TitleForeground     "White"
+
+#MenuTitleBackground "#595E3E"
+#MenuTitleForeground "White"
+
+#MenuBackground      "#C0C1B1"
+#MenuForeground      "#595E3E"
+
+#MenuShadowColor     "#363636"
+#MenuBorderColor     "#000000"
+#}
+# xv ~/.twm/walls/greenstone.jpg -root -quit
+
+# A theme based on the colours from the Slashdot website. 
+#Color
+#{
+#BorderColor         "#000000"
+#DefaultBackground   "#D1D1D1"
+#DefaultForeground   "#7F7F7F"
+
+#TitleBackground     "#005B5B"
+#TitleForeground     "White"
+
+#MenuTitleBackground "#005B5B"
+#MenuTitleForeground "White"
+
+#MenuBackground      "#D1D1D1"
+#MenuForeground      "#7F7F7F"
+
+#MenuShadowColor     "#363636"
+#MenuBorderColor     "#000000"
+#}
+# xv ~/.twm/walls/egypt.gif -root -quit
+
+#Color
+#{
+ ## TWM Simple Color
+ #DefaultBackground "white"  # "maroon" Sizing and information windows
+ #DefaultForeground "black"  # "gray85"
+
+ #MenuBackground  "LightSteelBlue"
+ #MenuForeground  "Black"  # "gray85"
+ #MenuShadowColor  "black"
+ #MenuTitleForeground "Black"  # "red"  # f.title color
+ #MenuTitleBackground "white"  # "black"
+
+ ## TWM Complex Color
+        #BorderColor  "Black" { } #"slategrey"
+        #BorderTileForeground "black" { } # Unhighlighted window borders
+        #BorderTileBackground "white" { }
+
+        #IconBackground  "LightSteelBlue" { } # "white"  black
+        #IconBorderColor  "Black" { } # "gray85"white
+        #IconForeground  "black" { } # "gray85" white
+
+        #IconManagerBackground "LightSteelBlue" { } # "maroon"
+        #IconManagerForeGround "Black" { } # "gray85"
+        #IconManagerHighlight "Black" { }
+
+        #TitleBackground  "LightSteelBlue" { }
+        #TitleForeground  "Black" { }
+
+ ## VTWM Simple Color
+ #RealScreenBackground "orange" # virtual desktop real screen indicator
+ #RealScreenForeground "yellow" # needs RealScreenPixmap
+ #VirtualBackground "grey"
+ #VirtualForeground "red"
+
+ ## VTWM Complex Color
+ #DesktopDisplayBackground "White" { # color of windows in virtual desktop windows and in iconmanager
+  #"emacs" "LightSteelBlue"
+  #"/dev/console" "LightSteelBlue"
+  #"Console" "LightSteelBlue"
+  #"XTerm" "LightSteelBlue"
+ #}
+ #DesktopDisplayBorder "black" {}
+ #DesktopDisplayForeground "black" { }
+#}
+
+#Color
+#{
+    #BorderColor "gray85"
+    #DefaultBackground "black"
+    #DefaultForeground "gray85"
+    #TitleBackground "black"
+    #TitleForeground "gray85"
+    #MenuBackground "black"
+    #MenuForeground "gray85"
+    #MenuTitleBackground "gray65"
+    #MenuTitleForeground "black"
+    #IconBackground "black"
+    #IconForeground "white"
+    #IconBorderColor "black"
+    #IconManagerBackground "black"
+    #IconManagerForeground "gray85"
+    #PointerForeground "black"
+    #PointerBackground "white"
+#}
+
+#Color
+#{
+#    BorderColor "slategrey"
+#    DefaultBackground "maroon"
+#    DefaultForeground "gray85"
+#    TitleBackground "maroon"
+#    TitleForeground "gray85"
+#    MenuBackground "maroon"
+#    MenuForeground "gray85"
+#    MenuTitleBackground "gray70"
+#    MenuTitleForeground "maroon"
+#    IconBackground "maroon"
+#    IconForeground "gray85"
+#    IconBorderColor "gray85"
+#    IconManagerBackground "maroon"
+#    IconManagerForeground "gray85"
+#}
+
+Color
+{
+BorderColor         "#4E4E4E"
+DefaultBackground   "#D6D6D6"
+DefaultForeground   "#000000"
+TitleBackground     "#4E4E4E"
+TitleForeground     "White"
+MenuTitleBackground "#4E4E4E"
+MenuTitleForeground "White"
+MenuBackground      "#D6D6D6"
+MenuForeground      "#4E4E4E"
+MenuShadowColor     "#303639"
+MenuBorderColor     "#000000"
+
+# IconManagerHighlight can only be specified inside of 
+# a Color, Grayscale or Monochrome list.
+IconManagerHighlight "maroon"       # Default: "black".
+}
+
+# http://www.custompc.plus.com/twm/configs/commented2.twmrc
+###
+#  Now define which cursor will appear as the the mouse
+#  cursor passes over different parts of the X-window
+# 
+#  The cursors are all part of the cursor font and can
+#  be displayed with the command:
+#  xfd -fn cursor
+#  
+#  The list of cursor names can be accessed by looking at
+#  /usr/X11R6/include/X11/cursorfont.h on Spiffy
+#  /usr/lpp/X11/include/X11/cursorfont.h on morgana
+###
+
+#Cursors
+#{
+# Frame "sb_up_arrow"
+# Title "sb_up_arrow"
+# Icon "sb_up_arrow"
+# Iconmgr "dot"
+# Menu "sb_left_arrow"
+# Button "sb_up_arrow"
+#}
+
+# http://www.xwinman.org/rc/twmrc-thomas
+Cursors
+{
+ Frame     "left_ptr"
+ Title     "left_ptr"
+ Icon      "left_ptr"
+ IconMgr   "left_ptr"
+ Move      "fleur"
+ Resize    "fleur"
+ Menu      "hand1"
+ Button    "hand2"
+ Wait      "clock"
+ Select     "dot"
+ Destroy   "pirate"
+}
+
+# Title bar buttons (three icons in the upper right hand corner) ---------
+# http://www.custompc.plus.com/twm/twmrc.htm
+
+IconDirectory "/home/dusko/.twm/icons" # Directory for non default icons
+
+# Left mouse button click on the first title button = minimize/maximize
+LeftTitleButton "resize.xbm"=f.resize
+
+# Right mouse button clicks:
+#   first button (icon) = iconify
+#   second button (icon) = maximize
+#   third button (icon) = close window
+# NOTE: Appareantly, works with left mouse button too!
+RightTitleButton "minimize.xbm"=f.iconify
+RightTitleButton "maximize.xbm"=f.fullzoom
+RightTitleButton "close.xbm"=f.delete
+
+# http://www.custompc.plus.com/twm/twmrc.htm
+# http://www.custompc.plus.com/twm/configs/commented2.twmrc
+# 
+# Mouse settings and Window behaviours -----------------------------------
+# A.k.a.: set up what is accessed by pressing the mouse buttons. 
+#
+# In short:
+#   Button1=left, Button2=middle, Button3=right, m=alt, c=ctrl, s=shift
+
+# http://www.custompc.plus.com/twm/configs/commented.twmrc
+###
+#  Button1 is the left mouse button
+#  Button2 is the middle mouse button
+#  Button3 is the right mouse button
+#  m stands for the meta key (usually 'alt')
+#  c stands for the ctrl key
+#  s stands for the shift key
+#  CONTEXT refers to which window or part of a window
+#          the button press will act upon.
+#  FUNCTION what to execute when the button is pressed
+#
+#  Example:
+#    Looking at the first entry below:
+#      While the cursor is in the root window, press
+#      the left mouse button and the alt and shift key
+#      at the same time.  This will pop up the menu
+#      labeled "button1". This menu is defined in the
+#      next section.
+###
+
+# NOTE:
+# Menus button1, button2 and button3 are defined later below.
+
+#Button = KEYS : CONTEXT : FUNCTION
+
+Button1 = s  : root    : f.menu "button1"  # Left mouse click and Shift together.
+Button2 = s  : root    : f.menu "button2"  # Middle mouse click and Shift together.
+Button3 = s  : root    : f.menu "button3"  # Right mouse click and Shift together.
+
+#Button1 = m  : all     : f.menu "button1"
+#Button2 = m  : all     : f.menu "button2"
+#Button3 = m  : all     : f.menu "button3"
+
+# Left click the window title to lower / raise + gain focus or move
+Movedelta 1
+Button1= :title: f.function "raise-lower-move"
+
+# Middle click the window title for options for individual windows
+Button2 = : title|frame : f.menu "WindowMenu"
+
+# Right click window title to resize the window by mousing beyond frame
+Button3 = : title|frame : f.resize
+
+# Add a close button to windows' titlebars
+# https://en.wikibooks.org/wiki/Guide_to_X11/Window_Managers/twm#Closing_program_windows_in_twm
+RightTitleButton "xlogo11" = f.delete
+
+# Hold alt key and left click to move entire window.
+Button1 = m : window : f.move
+
+# https://dev.alpinelinux.org/~clandmeter/other/forum.alpinelinux.org/forum/general-discussion/alpine-linux-desktop-environment.html
+# Hold alt key and right click to resize window.
+Button3 = m : window : f.resize
+
+# Use vi key bindings for cycling through windows. -- Same as in dwm.
+# Originally: Hold Alt and Tab cycles through windows bringing up focus.
+#"Tab" = m : root|window|frame|title : f.function "winup"
+#"Tab" = m : all : f.function "winup"
+"k" = m : all : f.function "winup"
+
+# Use vi key bindings for cycling back through windows. -- Same as in dwm.
+# Originally: Hold Alt, Tab and Shift to cycles through windows in the opposite direction.
+#"Tab" = m|s : root|window|frame|title : f.function "windown"
+"j" = m : all : f.function "windown"
+
+# Hold Alt plus left click window title to maximize window vertically
+Button1 = m : title|frame : f.zoom
+
+# Hold Alt plus right click window title to maximize window horizontally
+Button3 = m : title|frame : f.horizoom
+
+#
+# Set some useful bindings.  Sort of uwm-ish, sort of simple-button-ish
+#
+
+# Mouse Bindings ------------------------------------------------------
+#
+
+# Clicking on the desktop brings up the system-wide menu.
+
+# Left mouse button click within root window: Bring up the main menu.
+Button1 = : root : f.menu "defops"
+
+# Middle mouse button click within root window: Bring up the System menuu.
+Button2 = : root : f.menu "System"
+
+# Right mouse button click within root window: Bring up the TWM Windows menu.
+Button3 = : root : f.menu "TwmWindows"
+
+# !! Left mouse button click within a window raises it. !!
+# To me, this means: focusing to it. 
+# However, with this enabled, you cannot for example, select text in an editor.
+#Button1 = : window : f.raise
+
+#Button1 = m : window|icon : f.function "move-or-lower"
+#Button2 = m : window|icon : f.iconify
+#Button3 = m : window|icon : f.function "move-or-raise"
+
+#Button1 = : title : f.function "move-or-raise"
+#Button2 = : title : f.raiselower
+
+Button1 = : icon : f.function "move-or-iconify"
+Button2 = : icon : f.iconify
+
+Button1 = : iconmgr : f.iconify
+Button2 = : iconmgr : f.iconify
+
+# Keyboard Bindings ------------------------------------------------------
+#
+
+# From 'An overview of TWM by Tom LaStrange - 10 page pdf document from 1989. 
+# Tom LaStrange - The original author of TWM.
+# http://www.lastrange.com/work/twm.pdf
+# http://www.custompc.plus.com/twm/twm.pdf
+#
+
+# The key definition would cause the client window to be raised when the 
+# pointer is in an icon manager entry and the F1 key is pressed.
+# (Without it, the Icon Manager is visible on all virtual desktops (in my 
+# setup, implemented by the vdesk, a lightweight virtual desktop manager 
+# for X (http://offog.org/code/vdesk/) ).
+# 
+# In addition to that, this key definition also causes the Icon Manager 
+# to be minimized on all other virtual desktops, except in virtual 
+# desktop 1 -- It might seem that it's invisible in other virtual 
+# desktops so try looking for a very small window with 'Icons' in it. 
+# - When you find it, you can maximize it or move it around.
+"F1" = : iconmgr: f.raise
+
+# Now let's setup our mouse-free environment using some of the other 
+# available functions:
+NoTitleFocus     # Avoid keystrokes in wrong window because of lag.
+#"F8" =           : all     : f.warpto "XTerm Icon Manager"
+#"F6" =           : all     : f.warpto "xterm"   # Switch to xterm window.
+"Up" =           : iconmgr : f.upiconmgr
+"Down" =         : iconmgr : f.downiconmgr
+"Left" =         : iconmgr : f.lefticonmgr
+"Right" =        : iconmgr : f.righticonmgr
+"Left" = shift   : iconmgr : f.previconmgr
+"Right" = shift  : iconmgr : f.nexticonmgr
+"F1" =           : all     : f.raise            # i.e.: you can use it 
+"F2" =           : all     : f.lower
+"F3" =           : all     : f.iconify
+
+
+##############################################################################
+# From the man page for twm(1):
+# 
+# A user who wanted to be able to manipulate windows from the keyboard
+# could use the following bindings.
+# (Modified a little bit - changed functions of some function keys.)
+#"F1"    =       : all           : f.iconify
+#"F2"    =       : all           : f.raiselower
+#"F3"    =       : all           : f.iconify
+"F4"    =       : all           : f.raiselower
+"F5"    =       : all           : f.warpring "next"
+"F6"    =       : all           : f.warpto "xterm"   # Switch to xterm window.
+"F7"    =       : all           : f.colormap "next"
+"F8"    =       : all           : f.colormap "default"
+"F9"    =       : all           : f.warptoscreen "next"
+"Left"  = m     : all           : f.backiconmgr
+"Right" = m     : all           : f.forwiconmgr
+#"Up"    = m     : all           : f.upiconmgr
+#"Down"  = m | s : all           : f.downiconmgr
+
+# Launch Rofi with F4
+#"F4" =           : all     : f.exec "/usr/local/bin/rofi -combi-modi window,drun,run,ssh -theme solarized -font \"hack 10\" -show combi"
+
+# Launch Rofi with Alt + p
+"p" =         m  : all     : f.exec "/usr/local/bin/rofi -combi-modi window,drun,run,ssh -theme solarized -font \"hack 10\" -show combi"
+
+# Launch Xterm 
+#"F5" =           : all     : f.exec "xterm &"
+
+#   (m)eta 4     The meta 4 Key. The keyface will vary depending on what 
+#                keyboard you are using.
+#                On my system, it's a "Windows (TM)" key.
+"F6" = m4        : all     : f.fullzoom
+"F7" = m4        : all     : f.zoom
+
+# Launch xclock
+#"F10" =          : all     : f.exec "xclock &"
+
+
+#"q" = s | m4    : all     : f.quit
+"q" = m4         : all     : f.quit
+
+##############################################################################
+# Declare some menus.
+
+###
+#  Here we define the menus that were mentioned in the buttons 
+#  section above.
+#
+#  The first line of the menu is usually a title.
+#  The following lines refer to a program or function to run.
+#  The text in quotes on the left side is what will appear in 
+#  the menu. On the right is the command or function. For
+#  shell commands you need to use the ! to tell twm that it
+#  is not a built in or defined function but is a shell command
+###
+
+#
+# And menus with the usual things.
+#
+menu "defops"
+{
+"Twm"           f.title
+"Iconify"       f.iconify
+"Resize"        f.resize
+"Move"          f.move
+"Raise"         f.raise
+"Lower"         f.lower
+""              f.nop
+"Autoraise"     f.autoraise
+""              f.nop
+"Focus"         f.focus
+"Unfocus"       f.unfocus
+"Show Iconmgr"  f.showiconmgr
+"Hide Iconmgr"  f.hideiconmgr
+""              f.nop
+"Xterm"         f.exec "exec xterm &"
+""              f.nop
+"Utilities"     f.menu "utilities"
+""              f.nop
+"Quit"          f.menu "quit"
+""              f.nop
+"Kill"          f.destroy
+"Delete"        f.delete
+""              f.nop
+"Restart"       f.restart
+"Exit"          f.quit
+}
+
+# http://www.spy-hill.net/myers/fortran/sample.twmrc
+# In there, they called it "Tools"
+menu "utilities"
+{
+"Utilities"      f.title
+#"Xman"  f.exec "xman -rv &"
+"Xclock"  f.exec "xclock -analog &"
+"Xcalc"  f.exec "xcalc -rv &"
+""               f.nop
+"Load Average"  !"xload -geometry 122x70-246+0 &"
+""    f.beep
+"GRAPHICS" ("Maroon" : "grey80")  f.title
+"xv"    !"xv &"   
+"XFig "   !"xfig -me &"
+#   "ACE/gr"   !"xvgr >/dev/null 2>&1 &"
+"GNUplot"   !"xterm -name GNUplot -T GNUplot -e gnuplot &"
+"Ghostview"    !"ghostview &"
+"Magnifier"   !"xmag &"
+"Magnifier (2X)"  !"xmag -mag 2 &"
+"Magnifier (128 bits)" !"xmag -source 128x128 &"
+"  etc... "  ("Maroon" : "grey80")  f.title
+"Calculator (HP)"  !"xcalc -rpn -geometry 246x142-0+75 &"
+"Calculator (TI)"  !"xcalc &"
+"clock"   !"xclock -chime &"
+#"Performance monitor" !"xmeter -load `hostname` &"
+#"Perfmon"   !"xperfmon &"
+#"Calendar"   !"xcalendar &"
+}
+
+# http://www.xwinman.org/rc/twmrc-cjmckenzie
+menu "movement" 
+{
+"ADJUST"        f.title
+"Maximize"      f.fullzoom 
+"Adjust Size"   f.resize 
+"--->"          f.rightzoom 
+"<---"          f.leftzoom
+"<-->"          f.horizoom
+"^^^^"          f.topzoom
+"VVVV"          f.bottomzoom
+"^V^V"          f.zoom
+}
+
+menu "quit"
+{
+ "Really Quit?"     f.title
+ "No"               f.nop
+ "Yes"              f.quit
+}
+
+menu "exec" 
+{
+"shortcut" f.title
+"xterm" f.exec "xterm &"
+"firefox" f.exec "firefox &"
+#"libreoffice" f.exec "libreoffice &"
+}
+
+menu "button1"
+{
+"APPLICATIONS"  f.title
+"Load"   !"xload &"
+"Remote Loads"  !"xrload &"
+"Xterm font 8x13bold" !"xterm -fn 8x13bold -sb &"
+"Xterm font 6x10" !"xterm -geometry 100x100-10-10 -fn 6x10 -sb&"
+"Fortran Xterm"  !"xterm -geometry 72x60-10-10 -fn 8x13bold -bw 2 -name 'fortran' -n 'fortran'&"
+}
+
+menu "button2"
+{
+"SESSION OPERATIONS" f.title
+"BACKGROUNDS"  f.menu "backgrounds"
+"Restart in twm mode" f.restart
+"Source .twmrc"  f.restart
+"Kill twm"  f.quit
+}
+
+# There's lots more where these came from. This is just a representative
+# sampling. The best way to have your own default background
+# is to place one of these xsetroot commands in your .xsession.
+# Note that not all of these backgrounds will work on all displays
+# (e.g. X terminals) but they should fail gracefully if they fail.
+
+menu "backgrounds"
+{
+  "BACKGROUNDS"  f.title
+  "black"  !"xsetroot -solid black &"
+  "blue"  !"xsetroot -solid blue &"
+  "violet"  !"xsetroot -solid violet &"
+  "check"  !"xsetroot -mod 3 3 -fg violet -bg black &"
+  "scales"  !"xsetroot -bitmap /usr/local/include/X11/bitmaps/scales &"
+  "stipple"  !"xsetroot -bitmap /usr/local/include/X11/bitmaps/stipple &"
+  "gray"  !"xsetroot -bitmap /usr/include/X11/bitmaps/gray &"
+  "default"  !"xsetroot -def &"
+}
+
+menu "button3"
+{
+"WINDOW OPERATIONS" f.title
+"Move Window"       f.move
+"Resize Window"     f.resize
+"Raise Window"      f.raise
+"Lower Window"      f.lower
+"(De)Iconify"       f.iconify
+"Refresh"           f.refresh
+"Focus on Window"   f.focus
+"Unfocus"           f.unfocus
+"Destroy Window"    f.destroy
+"FUNCTION KEYS"     f.menu "function-keys"
+}
+
+# Note that this is really intended to be a "read-only menu".
+# It's just a way of providing information to the user, although
+# it can in fact be used to pick operations from.
+menu "function-keys"
+{
+"FUNCTION KEY BINDINGS"   f.title
+"Up:       : w     : f.raise"  f.raise
+"Down:     : w     : f.lower"  f.lower
+"Right:    : all   : f.warpring next" f.warpring "next"
+"Left:     : all   : f.warpring prev" f.warpring "prev"
+"Down: c   : w|i|t : f.iconify"  f.iconify
+"Down: m   : w     : f.zoom"  f.zoom
+"Down: s|m : w     : f.fullzoom" f.fullzoom
+"F1:   s   : all   : xterm"  !"xterm -n `hostname` &"
+}
+
+# http://www.custompc.plus.com/twm/configs/keith.twmrc
+menu "System"
+{
+ "System"         f.title
+ #"Window ops"     f.menu "Window Ops"
+ "Windows"        f.menu "TwmWindows"
+ "Movement"       f.menu "movement"
+ "Refresh"        f.refresh
+ "Unfocus"        f.unfocus
+ "Show Icon Box"  f.showiconmgr
+ "Hide Icon Box"  f.hideiconmgr
+ "Version"        f.version
+ ""               f.nop
+ "Restart"        f.restart
+ "Logout"         f.quit
+}
+
+# Virtual desktops with vdesk --------------------------------------------
+# vdesk ------------------------------------------------------------------
+# http://www.custompc.plus.com/twm/configs/vdesk
+
+function "set-desktop-1"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 1"
+}
+
+function "set-desktop-2"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 2"
+}
+
+function "set-desktop-3"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 3"
+}
+
+function "set-desktop-4"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 4"
+}
+
+function "set-desktop-5"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 5"
+}
+
+function "set-desktop-6"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 6"
+}
+
+function "set-desktop-7"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 7"
+}
+
+function "set-desktop-8"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 8"
+}
+
+function "set-desktop-9"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "vdesk 9"
+}
+
+function "desktop-forward"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "A=$((`vdesk`+1)); if [ $A = 5 ] ; then A=1 ; fi ; vdesk $A"   
+}
+
+function "desktop-back"
+{
+   # First bring xclock to vdesk 0 so it is visible on all virtual desktops
+   f.exec "/usr/local/bin/vdesk 0 `xwininfo -name xclock | grep xclock | awk '{print $4}'`"
+   f.exec "A=$((`vdesk`-1)); if [ $A = 0 ] ; then A=4 ; fi ; vdesk $A"   
+}
+
+# Ctrl + Alt + 1 = Virtual desktop 1
+# Ctrl + Alt + 2 = Virtual desktop 2
+# Ctrl + Alt + 3 = Virtual desktop 3
+# Ctrl + Alt + 4 = Virtual desktop 4
+# Ctrl + Alt + right arrow key = Cycle virtual desktops forward
+# Ctrl + Alt + left arrow key = Cycle virtual desktops backward
+#"1"   = c|m   : all         : f.function "set-desktop-1"
+#"2"   = c|m   : all         : f.function "set-desktop-2"
+#"3"   = c|m   : all         : f.function "set-desktop-3"
+#"4"   = c|m   : all         : f.function "set-desktop-4"
+
+# Changed it to dwm style switching - with only Alt + number.
+# Alt + 1 = Virtual desktop 1
+# Alt + 2 = Virtual desktop 2
+# Alt + 3 = Virtual desktop 3
+# Alt + 4 = Virtual desktop 4
+"1"   = m   : all         : f.function "set-desktop-1"
+"2"   = m   : all         : f.function "set-desktop-2"
+"3"   = m   : all         : f.function "set-desktop-3"
+"4"   = m   : all         : f.function "set-desktop-4"
+"5"   = m   : all         : f.function "set-desktop-5"
+"6"   = m   : all         : f.function "set-desktop-6"
+"7"   = m   : all         : f.function "set-desktop-7"
+"8"   = m   : all         : f.function "set-desktop-8"
+"9"   = m   : all         : f.function "set-desktop-9"
+
+"Right"  = c|m   : all         : f.function "desktop-forward"
+"Left"   = c|m   : all         : f.function "desktop-back"
+
+#
+# Define some useful functions for motion-based actions.
+#
+Function "raise-lower-move" { f.move f.raiselower }
+Function "winup" { f.circleup }
+Function "windown" { f.circledown }
+Function "move-or-lower" { f.move f.deltastop f.lower }
+Function "move-or-raise" { f.move f.deltastop f.raise }
+Function "move-or-iconify" { f.move f.deltastop f.iconify }
+
+DefaultFunction f.nop
+
+# http://www.custompc.plus.com/twm/configs/
+# http://www.custompc.plus.com/twm/configs/twmrc09
+#
+# Since twm cannot autostart applications I created this script. 
+# It will set desktop foreground to default twm menu background color and
+# will start xclock in upper right hand side corner of the screen.
+#
+# For bottom down right hand side corner, use this line instead:
+# xclock -bg 'rgb:2/a/9' -fg black -digital -geometry '-0-0' -padding 0 &
+# --- cut here ---
+# !/bin/sh
+# echo Starting twm window manager ...
+# twm &
+# xsetroot -solid 'rgb:2/a/9'
+# xclock -bg 'rgb:2/a/9' -fg black -digital -geometry '-0+0' -padding 0 &
+#
+# exec xterm
+# --- cut here ---
+
+# Starting applications in certain place and/or size
+# https://en.wikibooks.org/wiki/Guide_to_X11/Starting_Programs
+# https://askubuntu.com/questions/613973/how-can-i-start-up-an-application-with-a-pre-defined-window-size-and-position
+# https://ubuntuforums.org/showthread.php?t=75749
+# https://www.semicomplete.com/projects/xdotool/
+# https://unix.stackexchange.com/questions/5999/setting-the-window-dimensions-of-a-running-application/27570#27570
+# https://ubuntuforums.org/showthread.php?t=1687545&p=11059377#post11059377
+# https://unix.stackexchange.com/questions/273989/how-can-i-make-chromium-start-full-screen-under-x
+# --- cut here ---
+# $ chrome --window-size=800,600
+# --- cut here ---
+# ------------------------------------------------------------------------
+
+# An overview of TWM by Tom LaStrange - 10 page pdf document from 1989. 
+# http://www.custompc.plus.com/twm/twm.pdf
+#
+# The Title Bar
+# When X Version 11 was introduced, the concept of a title bar shifted 
+# from being the responsibility of the client to being the job of the 
+# window manager. 
+# A title bar is a horizontal rectangle placed above a client  window. 
+# The twm title bar has five areas of interest as shown below:
+#
+# +---+-----------------+---------------------------------------+---+---+
+# | 1 |        2        |                  3                    | 4 | 5 |
+# +---+-----------------+---------------------------------------+---+---+
+#
+# 1: Iconify glyph
+# 2: Window name 
+# 3: Highlight bar
+# 4: Focus glyph
+# 5: Resize glyph
+#
+# By default, the title bar recognizes pointer button presses and 
+# performs certain functions depending on what button is pressed. 
+#
+# The sensitive area is any area of the title bar not covered by one of 
+# the three glyphs.
+# 
+# By default, pointer button one causes the window to be raised to the 
+# active position (top); that is unobscured. Pointer button two initiates 
+# a move operation, which allows the user to move the window on the screen. 
+# Pointer button three causes the window to be lowered to the bottom of 
+# the stacking order. 
+# 
+# The title bar also has the feature of resizing itself and the buttons 
+# to correspond with the font currently displaying the window name.
+#
+#
+# Initialization
+# There are three different default files that twm attempts to read to 
+# get initialization information:
+#  
+#   1. $HOME/.twmrc.<screen number>
+#   2. $HOME/.twmrc
+#   3. /usr/lib/X11/twm/system.twmrc
+# 
+#   NOTE: On FreeBSD 12, Optione #3 is:
+#     /usr/local/share/X11/twm/system.twmrc
+#
+# Window Manager Functions
+# twm functions can be executed in three different ways:
+#   1. From a pointer button press
+#   2. From a keyboard key press
+#   3  From a menu
+#
+# A context in which to execute the function and any modifier keys needed 
+# may also be specified. The context simply specifies, with one exception, 
+# where the pointer needs to be positioned before the function executes. 
+#
+# The following contexts may be specified with pointer button 
+# and keyboard key specifications.
+#   (r)oot     Execute the function if the pointer is in the root window.
+#   (f)rame    Execute the function if the pointer is in the twm frame.
+#   (t)itle    Execute the function if the pointer is in the title bar.
+#   (w)indow   Execute the function if the pointer is in the client window.
+#   (i)con     Execute the function if the pointer is in the associated icon window.
+#   icon(m)gr  Execute the function if the pointer is in the icon manager entry.
+#   all        Execute the function no matter where the pointer is.
+#
+# The letter in brackets of each context shows the one letter abbreviation 
+# for each context.  
+# 
+# In addition to these contexts, a double quoted string may also be 
+# specified for functions tied to a key on the keyboard. 
+# 
+# Modifier keys may also be specified that need to be pressed before the 
+# function executes. twm recognizes the following modifier keys:
+#   shift      The Shift key 
+#   control    The Control Key 
+#   (m)eta     The meta Key. The keyface will vary depending on what 
+#                            keyboard you are using.
+#
+# Once again, the letter in brackets indicates the one letter 
+# abbreviation that may be used.
+#
+# The format of a pointer button or keyboard key specification is as follows:
+#    [button | key] = [modifiers] : context : function 
+# 
+# Now for some examples:
+#     Button1=: root: f.menu "system menu"
+#     Button2=: tfwi: f.function "raise-lower-move"
+#     "F1"= shift: t|f|w|i: f.raise
+# 
+# The first example pops up the menu "system menu" when pointer button 
+# one is pressed in the root window. The second executes the function 
+# stream "raise-lower-move" if the pointer is in a title bar, a frame, 
+# a client window, or an icon. The  third  example executes the 
+# f.raise function if the pointer is in a title bar, a frame, a client 
+# window, or an icon, and the F1 key is pressed while the Shift key is 
+# held down.
+# 
+# ------------------------------------------------------------------------
